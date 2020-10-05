@@ -25,16 +25,12 @@ import shdv.iotdev.rsproductstest.viewmodels.impl.ProductTaxVM
  * Use the [ProductTaxView.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ProductTaxView (private val viewModel: ProductTaxVM = ProductTaxVM.DEFAULT) : Fragment() {
+class ProductTaxView (private val viewModel: ProductTaxVM<ProductTaxModel> = ProductTaxVM.DEFAULT) : Fragment() {
 
     private lateinit var binding: FragmentProductTaxViewBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-
-        super.onCreate(savedInstanceState)
+    private var model: ProductTaxModel = viewModel.model
 
 
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +42,11 @@ class ProductTaxView (private val viewModel: ProductTaxVM = ProductTaxVM.DEFAULT
 
         }
         binding.taxModelview = viewModel
+        binding.model = model
+        binding.addToCart.isEnabled = !viewModel.busy.get()
+        binding.decQuantity.isEnabled = !viewModel.busy.get()
+        binding.incQuantity.isEnabled = !viewModel.busy.get()
+
          return binding.root
     }
 
@@ -53,8 +54,9 @@ class ProductTaxView (private val viewModel: ProductTaxVM = ProductTaxVM.DEFAULT
         try {
            // product_icon.setImageURI(Uri.parse("https://picsum.photos/id/124/200/300"))
             //binding.taxProductCategory.text = binding.taxModel?.category?:""
+
             Glide.with(this.context?:MainActivity.context)
-                .load(binding.taxModelview?.model?.imageUrl)
+                .load(model.imageUrl)
                 .into(product_icon)
             Log.d("IMAGE", "Success to set image")
         }

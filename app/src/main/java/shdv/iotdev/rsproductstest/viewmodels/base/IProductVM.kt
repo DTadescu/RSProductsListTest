@@ -2,15 +2,15 @@ package shdv.iotdev.rsproductstest.viewmodels.base
 
 import shdv.iotdev.rsproductstest.models.base.TaxModel
 
-interface IProductVM<T: TaxModel> {
-
-    val model: T
+interface IProductVM {
 
     fun addToBasket()
 
     fun incQuantity()
 
     fun decQuantity()
+
+    fun showDetails()
 
 //    fun onResume()
 //

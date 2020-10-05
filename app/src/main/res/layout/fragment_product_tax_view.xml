@@ -6,9 +6,13 @@
     
     <data>
         <import type="android.view.View"/>
+        <import type="shdv.iotdev.rsproductstest.models.impl.ProductTaxModel"/>
         <variable
             name="tax_modelview"
-            type="shdv.iotdev.rsproductstest.viewmodels.impl.ProductTaxVM" />
+            type="shdv.iotdev.rsproductstest.viewmodels.impl.ProductTaxVM&lt;ProductTaxModel>" />
+        <variable
+            name="model"
+            type="shdv.iotdev.rsproductstest.models.impl.ProductTaxModel" />
     </data>
 <FrameLayout 
     android:layout_width="match_parent"
@@ -24,44 +28,53 @@
         >
 
 
-        <ImageView
-            android:id="@+id/product_icon"
+        <androidx.cardview.widget.CardView
             android:layout_width="100dp"
             android:layout_height="150dp"
-            android:src="@mipmap/ic_launcher"
-            android:contentDescription="@{tax_modelview.model.name}"
-            android:scaleType="matrix"
+            android:id="@+id/product_icon_card"
             android:layout_margin="5dp"
-            android:background="@drawable/image_shape"
+            app:cardCornerRadius="6dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            >
+            <ImageView
+                android:id="@+id/product_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_launcher"
+                android:contentDescription="@{model.name}"
+                android:scaleType="fitCenter"
+                android:onClick="@{() -> tax_modelview.showDetails()}"
+                />
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/CategoryText"
             android:id="@+id/tax_product_category"
-            app:layout_constraintLeft_toRightOf="@+id/product_icon"
+            app:layout_constraintLeft_toRightOf="@+id/product_icon_card"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{tax_modelview.model.category}" />
+            android:text="@{model.category}" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tax_product_name"
             style="@style/ProductText"
-            app:layout_constraintLeft_toRightOf="@+id/product_icon"
+            app:layout_constraintLeft_toRightOf="@+id/product_icon_card"
             app:layout_constraintTop_toBottomOf="@id/tax_product_category"
-            android:text="@{tax_modelview.model.name}"/>
+            android:text="@{model.name}"
+            android:onClick="@{() -> tax_modelview.showDetails()}"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tax_product_producer"
             style="@style/ProducerText"
-            app:layout_constraintLeft_toRightOf="@+id/product_icon"
+            app:layout_constraintLeft_toRightOf="@+id/product_icon_card"
             app:layout_constraintTop_toBottomOf="@id/tax_product_name"
-            android:text="@{tax_modelview.model.producer}" />
+            android:text="@{model.producer}" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -70,9 +83,9 @@
             style="@style/PriceText"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
-            app:layout_constraintLeft_toRightOf="@+id/product_icon"
+            app:layout_constraintLeft_toRightOf="@+id/product_icon_card"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="@{Double.toString(tax_modelview.model.price)}" />
+            android:text="@{Double.toString(model.price)}" />
 
         <ImageView
             android:layout_width="26dp"
@@ -88,8 +101,8 @@
                 style="@style/ButtonText"
                 android:src="@drawable/cart_30"
                 android:id="@+id/add_to_cart"
-                android:text="@string/to_cart"
                 android:visibility="@{ tax_modelview.model.count == 0 ? View.VISIBLE : View.GONE}"
+
                 android:onClick="@{() -> tax_modelview.addToBasket()}"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
@@ -97,6 +110,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/quantity_panel"
             android:orientation="horizontal"
             android:background="@drawable/button_focus"
             app:layout_constraintRight_toRightOf="parent"
@@ -105,6 +119,7 @@
         <Button
             android:layout_width="40dp"
             android:layout_height="30dp"
+            android:id="@+id/dec_quantity"
             android:background="@drawable/button_focus"
             style="@style/ButtonText"
             android:text="@string/minus"
@@ -121,6 +136,7 @@
             <Button
                 android:layout_width="40dp"
                 android:layout_height="30dp"
+                android:id="@+id/inc_quantity"
                 android:background="@drawable/button_focus"
                 style="@style/ButtonText"
                 android:text="@string/plus"
