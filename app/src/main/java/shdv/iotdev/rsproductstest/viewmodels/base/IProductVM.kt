@@ -1,8 +1,10 @@
 package shdv.iotdev.rsproductstest.viewmodels.base
 
-import shdv.iotdev.rsproductstest.models.base.TaxModel
+import androidx.databinding.ObservableInt
 
 interface IProductVM {
+
+    fun getCount(): ObservableInt
 
     fun addToBasket()
 

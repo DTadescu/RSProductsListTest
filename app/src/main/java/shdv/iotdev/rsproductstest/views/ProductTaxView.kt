@@ -1,6 +1,5 @@
 package shdv.iotdev.rsproductstest.views
 
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,15 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.AndroidViewModel
 import kotlinx.android.synthetic.main.fragment_product_tax_view.*
 import shdv.iotdev.rsproductstest.R
 import java.lang.Exception
 import com.bumptech.glide.Glide
-import shdv.iotdev.rsproductstest.MainActivity
 import shdv.iotdev.rsproductstest.databinding.FragmentProductTaxViewBinding
-import shdv.iotdev.rsproductstest.models.impl.ProductTaxModel
-import shdv.iotdev.rsproductstest.viewmodels.base.IProductVM
+import shdv.iotdev.rsproductstest.models.impl.ProductDetailModel
 import shdv.iotdev.rsproductstest.viewmodels.impl.ProductTaxVM
 
 
@@ -25,10 +21,10 @@ import shdv.iotdev.rsproductstest.viewmodels.impl.ProductTaxVM
  * Use the [ProductTaxView.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ProductTaxView (private val viewModel: ProductTaxVM<ProductTaxModel> = ProductTaxVM.DEFAULT) : Fragment() {
+class ProductTaxView : Fragment() {
 
     private lateinit var binding: FragmentProductTaxViewBinding
-    private var model: ProductTaxModel = viewModel.model
+    private var viewModel = ProductTaxVM.DEFAULT
 
 
 
@@ -42,7 +38,7 @@ class ProductTaxView (private val viewModel: ProductTaxVM<ProductTaxModel> = Pro
 
         }
         binding.taxModelview = viewModel
-        binding.model = model
+        binding.model = viewModel.model
         binding.addToCart.isEnabled = !viewModel.busy.get()
         binding.decQuantity.isEnabled = !viewModel.busy.get()
         binding.incQuantity.isEnabled = !viewModel.busy.get()
@@ -51,21 +47,32 @@ class ProductTaxView (private val viewModel: ProductTaxVM<ProductTaxModel> = Pro
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         try {
            // product_icon.setImageURI(Uri.parse("https://picsum.photos/id/124/200/300"))
             //binding.taxProductCategory.text = binding.taxModel?.category?:""
 
-            Glide.with(this.context?:MainActivity.context)
-                .load(model.imageUrl)
+            Glide.with(this.context!!)
+                .load(viewModel.model.imageUrl)
                 .into(product_icon)
             Log.d("IMAGE", "Success to set image")
         }
         catch (e: Exception){
             Log.d("IMAGE", e.message?:"")
         }
-        super.onViewCreated(view, savedInstanceState)
     }
 
+    class Builder(){
 
+        private var viewmodel:ProductTaxVM<ProductDetailModel> = ProductTaxVM.DEFAULT
+
+        fun setViewModel(viewmodel: ProductTaxVM<ProductDetailModel>){
+            this.viewmodel = viewmodel
+        }
+
+        fun build() = ProductTaxView().apply {
+            viewModel = viewmodel
+        }
+    }
 
 }

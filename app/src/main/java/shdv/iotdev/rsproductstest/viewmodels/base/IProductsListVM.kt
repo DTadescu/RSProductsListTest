@@ -1,6 +1,12 @@
 package shdv.iotdev.rsproductstest.viewmodels.base
 
-interface IProductsListVM {
+interface IProductsListVM<T: IProductVM> {
+
+    val productsList: MutableList<T>
+
+    fun getCurrentProduct():T
+
+    fun setCurrentProduct(id: Int):Boolean
 
     fun getProducts()
 

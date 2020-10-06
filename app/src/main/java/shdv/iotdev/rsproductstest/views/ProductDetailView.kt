@@ -9,24 +9,17 @@ import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_product_tax_view.*
-import shdv.iotdev.rsproductstest.MainActivity
 import shdv.iotdev.rsproductstest.R
 import shdv.iotdev.rsproductstest.databinding.FragmentProductDetailViewBinding
-import shdv.iotdev.rsproductstest.databinding.FragmentProductTaxViewBinding
 import shdv.iotdev.rsproductstest.models.impl.ProductDetailModel
-import shdv.iotdev.rsproductstest.models.impl.ProductTaxModel
 import shdv.iotdev.rsproductstest.viewmodels.impl.ProductTaxVM
 
 
-class ProductDetailView(private val viewModel: ProductTaxVM<ProductDetailModel> = ProductTaxVM(ProductDetailModel())) : Fragment() {
+class ProductDetailView() : Fragment() {
 
     private lateinit var binding: FragmentProductDetailViewBinding
-    private var model: ProductDetailModel = viewModel.model
+    private var viewModel = ProductTaxVM.DEFAULT
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,20 +29,43 @@ class ProductDetailView(private val viewModel: ProductTaxVM<ProductDetailModel> 
         if(!this::binding.isInitialized){
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_detail_view, container, false)
         }
-        binding.model = model
+        binding.model = viewModel.model
         binding.viewmodel = viewModel
-        binding.categoriesList.adapter = ArrayAdapter<String>(context!!, R.layout.list_text_item, model.categories.toTypedArray())
+        binding.categoriesList.adapter = ArrayAdapter<String>(context!!, R.layout.list_text_item, viewModel.model.categories.toTypedArray())
+
+        // set listview height depends on items
+        binding.categoriesList.layoutParams = binding.categoriesList.layoutParams.apply {
+            var totalHeight = 0
+            for (i in 0 until binding.categoriesList.adapter.count){
+                val listItem = binding.categoriesList.adapter.getView(i, null, binding.categoriesList)
+                listItem.measure(0, 0)
+                totalHeight += listItem.measuredHeight
+            }
+            height = totalHeight + binding.categoriesList.dividerHeight * (binding.categoriesList.adapter.count - 1)
+        }
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Glide.with(this.context?: MainActivity.context)
-            .load(model.imageUrl)
+        super.onViewCreated(view, savedInstanceState)
+        Glide.with(this.context!!)
+            .load(viewModel.model.imageUrl)
             .into(product_icon)
 
-        super.onViewCreated(view, savedInstanceState)
     }
 
+    class Builder() {
+
+        private var viewmodel: ProductTaxVM<ProductDetailModel> = ProductTaxVM.DEFAULT
+
+        fun setViewModel(viewmodel: ProductTaxVM<ProductDetailModel>) {
+            this.viewmodel = viewmodel
+        }
+
+        fun build() = ProductDetailView().apply {
+            viewModel = viewmodel
+        }
+    }
 
 }
