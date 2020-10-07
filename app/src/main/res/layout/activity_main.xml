@@ -103,15 +103,18 @@
             android:layout_height="match_parent">
 
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/container1">
-                <!--        <TextView-->
-                <!--            android:id="@+id/container_placeholder"-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="match_parent"/>-->
-            </FrameLayout>
+                android:id="@+id/container1"
+                android:orientation="vertical">
+<!--                <ListView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/product_list"-->
+<!--                    android:dividerHeight="3dp"-->
+<!--                    android:divider="@color/white"/>-->
+            </LinearLayout>
 
         </ScrollView>
     </LinearLayout>

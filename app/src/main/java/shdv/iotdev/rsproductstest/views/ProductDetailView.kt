@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.fragment_product_tax_view.*
 import shdv.iotdev.rsproductstest.R
 import shdv.iotdev.rsproductstest.databinding.FragmentProductDetailViewBinding
 import shdv.iotdev.rsproductstest.models.impl.ProductDetailModel
+import shdv.iotdev.rsproductstest.utils.setHeightByContent
 import shdv.iotdev.rsproductstest.viewmodels.impl.ProductTaxVM
 
 
@@ -34,15 +35,7 @@ class ProductDetailView() : Fragment() {
         binding.categoriesList.adapter = ArrayAdapter<String>(context!!, R.layout.list_text_item, viewModel.model.categories.toTypedArray())
 
         // set listview height depends on items
-        binding.categoriesList.layoutParams = binding.categoriesList.layoutParams.apply {
-            var totalHeight = 0
-            for (i in 0 until binding.categoriesList.adapter.count){
-                val listItem = binding.categoriesList.adapter.getView(i, null, binding.categoriesList)
-                listItem.measure(0, 0)
-                totalHeight += listItem.measuredHeight
-            }
-            height = totalHeight + binding.categoriesList.dividerHeight * (binding.categoriesList.adapter.count - 1)
-        }
+        binding.categoriesList.setHeightByContent()
 
         return binding.root
     }

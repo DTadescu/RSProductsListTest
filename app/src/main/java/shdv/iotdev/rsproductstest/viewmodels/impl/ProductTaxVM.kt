@@ -9,7 +9,7 @@ import shdv.iotdev.rsproductstest.viewmodels.base.IProductVM
 
 class ProductTaxVM<T: TaxModel> (
     val model: T,
-    val detail: (id:Int) -> Unit = {}
+    var detail: (id:Int) -> Unit = {}
 ): IProductVM {
 
     private var count: ObservableInt = ObservableInt(0)
@@ -26,19 +26,16 @@ class ProductTaxVM<T: TaxModel> (
 
 
     override fun addToBasket() = runWithBusy {
-      // model.count.set(model.count.get()+1)
         count.set(count.get()+1)
         //some logic to add to cart
     }
 
     override fun incQuantity() = runWithBusy {
-      //  model.count.set(model.count.get()+1)
         count.set(count.get()+1)
     }
 
     override fun decQuantity() = runWithBusy {
         if(count.get() > 0) {
-           // model.count.set(model.count.get()-1)
             count.set(count.get()-1)
         }
 
@@ -53,4 +50,5 @@ class ProductTaxVM<T: TaxModel> (
         action()
         busy.set(false)
     }
+
 }

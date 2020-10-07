@@ -62,17 +62,17 @@ class ProductTaxView : Fragment() {
         }
     }
 
-    class Builder(){
-
-        private var viewmodel:ProductTaxVM<ProductDetailModel> = ProductTaxVM.DEFAULT
-
-        fun setViewModel(viewmodel: ProductTaxVM<ProductDetailModel>){
-            this.viewmodel = viewmodel
+    fun setViewModel(viewmodel: ProductTaxVM<ProductDetailModel>){
+        viewModel = viewmodel
+        Log.d("Binding", "setViewModel")
+        if(this::binding.isInitialized){
+            Log.d("Binding","Initialized")
+            binding.taxModelview = viewModel
+            binding.model = viewModel.model
         }
 
-        fun build() = ProductTaxView().apply {
-            viewModel = viewmodel
-        }
     }
+
+
 
 }
