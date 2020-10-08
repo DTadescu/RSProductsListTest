@@ -1,5 +1,6 @@
 package shdv.iotdev.rsproductstest.views
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -28,6 +29,7 @@ class ProductTaxView : Fragment() {
 
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,6 +44,7 @@ class ProductTaxView : Fragment() {
         binding.addToCart.isEnabled = !viewModel.busy.get()
         binding.decQuantity.isEnabled = !viewModel.busy.get()
         binding.incQuantity.isEnabled = !viewModel.busy.get()
+
 
          return binding.root
     }
@@ -73,6 +76,7 @@ class ProductTaxView : Fragment() {
 
     }
 
-
+    fun checkViewOnScreen(bounds: Rect): Boolean =
+        product_icon?.getLocalVisibleRect(bounds)?:false
 
 }

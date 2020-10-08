@@ -9,4 +9,6 @@ interface IProductsListVM<T: IProductVM> {
     fun getProducts()
 
     fun getProductsByFilter(filter: String)
+    fun update()
+    fun onSearchEditChanged(s: CharSequence?, start: Int, before: Int, count: Int)
 }

@@ -76,8 +76,10 @@
                     <EditText
                         android:layout_width="0dp"
                         android:layout_height="50dp"
+                        android:id="@+id/search_edit"
                         android:hint="@string/filter_input"
                         android:autofillHints="@string/filter_input"
+                        android:text="@{viewmodel.searchEdit}"
                         app:layout_constraintLeft_toRightOf="@id/reset_filter_but"
                         app:layout_constraintRight_toLeftOf="@id/search_image"
                         app:layout_constraintTop_toTopOf="parent"/>
@@ -99,6 +101,7 @@
         </androidx.appcompat.widget.Toolbar>
 
         <ScrollView
+            android:id="@+id/fragments_scroller"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

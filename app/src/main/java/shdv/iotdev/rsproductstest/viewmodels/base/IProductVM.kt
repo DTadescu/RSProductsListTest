@@ -6,11 +6,9 @@ interface IProductVM {
 
     fun getCount(): ObservableInt
 
-    fun addToBasket()
+    fun incQuantity(): Boolean
 
-    fun incQuantity()
-
-    fun decQuantity()
+    fun decQuantity(): Boolean
 
     fun showDetails()
 
