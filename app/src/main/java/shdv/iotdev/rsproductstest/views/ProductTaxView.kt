@@ -18,9 +18,7 @@ import shdv.iotdev.rsproductstest.viewmodels.impl.ProductTaxVM
 
 
 /**
- * A simple [Fragment] subclass.
- * Use the [ProductTaxView.newInstance] factory method to
- * create an instance of this fragment.
+ * Fragment for showing taxonomy card of a product
  */
 class ProductTaxView : Fragment() {
 
@@ -49,33 +47,37 @@ class ProductTaxView : Fragment() {
          return binding.root
     }
 
+    /**
+     * Set picture with Glide
+     * @TODO: Replace to service for reusability
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         try {
-           // product_icon.setImageURI(Uri.parse("https://picsum.photos/id/124/200/300"))
-            //binding.taxProductCategory.text = binding.taxModel?.category?:""
 
             Glide.with(this.context!!)
                 .load(viewModel.model.imageUrl)
+                .error(R.drawable.placeholder)
                 .into(product_icon)
-            Log.d("IMAGE", "Success to set image")
         }
         catch (e: Exception){
+            e.printStackTrace()
             Log.d("IMAGE", e.message?:"")
         }
     }
 
     fun setViewModel(viewmodel: ProductTaxVM<ProductDetailModel>){
         viewModel = viewmodel
-        Log.d("Binding", "setViewModel")
         if(this::binding.isInitialized){
-            Log.d("Binding","Initialized")
             binding.taxModelview = viewModel
             binding.model = viewModel.model
         }
 
     }
 
+    /**
+     * Function, that @return true if image is on screen
+     */
     fun checkViewOnScreen(bounds: Rect): Boolean =
         product_icon?.getLocalVisibleRect(bounds)?:false
 

@@ -12,7 +12,5 @@ interface IProductVM {
 
     fun showDetails()
 
-//    fun onResume()
-//
-//    fun onPause()
+    fun setCount(value: Int)
 }

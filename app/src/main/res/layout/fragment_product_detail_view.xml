@@ -25,21 +25,23 @@
                 android:padding="5dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/detail_product_name"
                     style="@style/ProductText"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
                     android:text="@{model.name}"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/detail_product_producer"
                     style="@style/ProducerText"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/detail_product_name"
+                    app:layout_constraintRight_toRightOf="parent"
                     android:text="@{model.producer}" />
 
                 <androidx.cardview.widget.CardView

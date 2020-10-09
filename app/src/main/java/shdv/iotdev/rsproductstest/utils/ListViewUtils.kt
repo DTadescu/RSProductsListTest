@@ -2,6 +2,9 @@ package shdv.iotdev.rsproductstest.utils
 
 import android.widget.ListView
 
+/**
+ * ListView extension, that calculates ListView height depends of adapter content
+ */
 fun ListView.setHeightByContent(){
     if(adapter != null && !adapter.isEmpty){
         layoutParams.apply {

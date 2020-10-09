@@ -15,7 +15,9 @@ import shdv.iotdev.rsproductstest.models.impl.ProductDetailModel
 import shdv.iotdev.rsproductstest.utils.setHeightByContent
 import shdv.iotdev.rsproductstest.viewmodels.impl.ProductTaxVM
 
-
+/**
+ * Fragment for showing detail information about product
+ */
 class ProductDetailView() : Fragment() {
 
     private lateinit var binding: FragmentProductDetailViewBinding
@@ -32,6 +34,9 @@ class ProductDetailView() : Fragment() {
         }
         binding.model = viewModel.model
         binding.viewmodel = viewModel
+        binding.addToCart.isEnabled = !viewModel.busy.get()
+        binding.decQuantity.isEnabled = !viewModel.busy.get()
+        binding.incQuantity.isEnabled = !viewModel.busy.get()
         binding.categoriesList.adapter = ArrayAdapter<String>(context!!, R.layout.list_text_item, viewModel.model.categories.toTypedArray())
 
         // set listview height depends on items
@@ -40,10 +45,15 @@ class ProductDetailView() : Fragment() {
         return binding.root
     }
 
+    /**
+     * Set picture with Glide
+     * @TODO: Replace to service for reusability
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Glide.with(this.context!!)
             .load(viewModel.model.imageUrl)
+            .error(R.drawable.placeholder)
             .into(product_icon)
 
     }

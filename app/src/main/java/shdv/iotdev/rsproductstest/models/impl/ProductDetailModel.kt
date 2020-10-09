@@ -4,16 +4,14 @@ package shdv.iotdev.rsproductstest.models.impl
 import shdv.iotdev.rsproductstest.models.base.TaxModel
 
 data class ProductDetailModel(
-    override val id: Int = 0,
+    override val id: Int = Int.MIN_VALUE,
     val imageUrl: String = "https://picsum.photos/id/124/200/300",
-    val categories: List<String> = listOf("Category1", "Category2", "Category3"),
+    val categories: List<String> = emptyList(),
     val category: String = categories.takeIf { it.isNotEmpty() }?.first()?:"",
-    val name: String = "Product",
-    val producer: String = "Producer is not available",
-    val description: String = "Sorry, description is not available. " +
-            "I say, description is not available. Look at me, description is not available. " +
-            "Fuck off, description is not available. ",
-    val price: Double = 999.99
+    val name: String = "",
+    val producer: String = "",
+    val description: String = "",
+    val price: Double = 9999.99
 ):TaxModel(
     id = id
 )

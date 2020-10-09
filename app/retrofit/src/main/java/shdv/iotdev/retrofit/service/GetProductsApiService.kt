@@ -8,6 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 import shdv.iotdev.retrofit.models.ProductDTO
+import shdv.iotdev.retrofit.models.ProductDataDTO
 import shdv.iotdev.retrofit.models.ProductsListDTO
 
 interface GetProductsApiService {
@@ -23,7 +24,7 @@ interface GetProductsApiService {
     @GET("v1/products/{productId}")
     fun getProductById(
         @Path("productId") productId: Int
-    ): Observable<ProductDTO>
+    ): Observable<ProductDataDTO>
 
     companion object Factory{
         fun create(): GetProductsApiService = Retrofit.Builder()
